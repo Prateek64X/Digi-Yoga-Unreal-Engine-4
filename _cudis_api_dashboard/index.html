@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CUDIS Dashboard</title>
+
+  <!-- Include Bootstrap for styling -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Include FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Include jQuery and Chart.js for graphs -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Left-side Menu Panel -->
+  <div class="menu">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="#"><i class="fas fa-home"></i> Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-heartbeat"></i> Heartbeat</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-walking"></i> Steps</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-bed"></i> Sleep</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-chart-bar"></i> Reports</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" id="goals-tab" data-toggle="tab" href="#goals" role="tab" aria-controls="goals" aria-selected="false"><i class="fas fa-bullseye"></i> Goals</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-fluid">
+    <h1 class="text-center mb-5">CUDIS Dashboard</h1>
+
+    <!-- Top right section with Battery and Notification -->
+    <div class="d-flex justify-content-end">
+      <!-- Battery indicator -->
+      <div class="battery-indicator text-right mr-4">
+        <i class="fas fa-battery-full"></i> 95%
+      </div>
+
+      <!-- Notification indicator -->
+      <div class="notification-indicator text-right">
+        <i class="fas fa-bell"></i>
+        <span class="badge badge-danger">2</span> <!-- Notification count -->
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Left section: Image (Ring) -->
+      <div class="col-md-5 text-center">
+        <img src="image.png" alt="Ring Image" class="img-fluid" width="800px" height="700px">
+      </div>
+
+      <!-- Right section: Data with labels and tabs -->
+      <div class="col-md-7">
+        <!-- Tabs for different data categories -->
+        <ul class="nav nav-tabs" id="dataTabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="heartbeat-tab" data-toggle="tab" href="#heartbeat" role="tab" aria-controls="heartbeat" aria-selected="true"><i class="fas fa-heart"></i> Heartbeat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="steps-tab" data-toggle="tab" href="#steps" role="tab" aria-controls="steps" aria-selected="false"><i class="fas fa-walking"></i> Steps</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sleep-tab" data-toggle="tab" href="#sleep" role="tab" aria-controls="sleep" aria-selected="false"><i class="fas fa-bed"></i> Sleep</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="goals-tab" data-toggle="tab" href="#goals" role="tab" aria-controls="goals" aria-selected="false"><i class="fas fa-bullseye"></i> Goals</a>
+          </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content mt-4">
+          <!-- Heartbeat Data -->
+          <div class="tab-pane fade show active" id="heartbeat" role="tabpanel" aria-labelledby="heartbeat-tab">
+            <div class="data-label">Heart Rate: <span class="neon-highlight">75 bpm</span></div>
+            <div class="data-label">Max Heart Rate: <span class="neon-highlight">120 bpm</span></div>
+            <div class="data-label">Min Heart Rate: <span class="neon-highlight">60 bpm</span></div>
+            <canvas id="heartbeatChart" width="550" height="200"></canvas>
+          </div>
+
+          <!-- Steps Data -->
+          <div class="tab-pane fade" id="steps" role="tabpanel" aria-labelledby="steps-tab">
+            <div class="data-label">Steps Taken: <span class="neon-highlight">5000</span></div>
+            <div class="data-label">Goal: <span class="neon-highlight">10000 steps</span></div>
+            <canvas id="stepsChart" width="550" height="200"></canvas>
+          </div>
+
+          <!-- Sleep Data -->
+          <div class="tab-pane fade" id="sleep" role="tabpanel" aria-labelledby="sleep-tab">
+            <div class="data-label">Total Sleep: <span class="neon-highlight">6 hours</span></div>
+            <div class="data-label">Deep Sleep: <span class="neon-highlight">2 hours</span></div>
+            <div class="data-label">Light Sleep: <span class="neon-highlight">4 hours</span></div>
+            <canvas id="sleepChart" width="550" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Goals Data -->
+        <div class="tab-pane fade" id="goals" role="tabpanel" aria-labelledby="goals-tab">
+          <div class="text-center">
+            <button id="subtractGoal" class="goal-btn">-</button>
+            <span id="goalValue" class="goal-value">0</span>
+            <button id="addGoal" class="goal-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot/Alerts Panel -->
+  <div class="chatbot-panel fixed-bottom bg-light border-top p-3">
+    <div class="alert-list mb-3">
+      <div class="alert alert-danger d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Critical:</strong> High Heart Rate during sleep
+          <p>Occurred 2 times in the week.</p>
+        </div>
+        <div>
+          <i class="fas fa-eye mr-3"></i>
+          <i class="fas fa-reply"></i>
+        </div>
+      </div>
+
+      <div class="alert alert-warning d-flex justify-content-between align-items-center">
+        <div>
+          <strong>Warning:</strong> High stress level - Possible caffeine consumption.
+        </div>
+        <div>
+          <i class="fas fa-eye mr-3"></i>
+          <i class="fas fa-reply"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot Input -->
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Type a message..." aria-label="Type a message">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JavaScript to generate graphs -->
+  <script>
+    let goalValue = 0;
+    let totalAdded = 0;
+
+    document.getElementById('addGoal').addEventListener('click', function() {
+      goalValue += 10;
+      totalAdded += 10;
+      document.getElementById('goalValue').textContent = goalValue;
+
+      if (totalAdded >= 20) {
+        alert('Your goals are updated');
+        totalAdded = 0; // Reset counter after alert
+      }
+    });
+
+    document.getElementById('subtractGoal').addEventListener('click', function() {
+      goalValue = Math.max(0, goalValue - 10);
+      document.getElementById('goalValue').textContent = goalValue;
+    });
+
+
+    const ctx1 = document.getElementById('heartbeatChart').getContext('2d');
+    const heartbeatChart = new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['12AM', '1AM', '2AM', '3AM', '4AM'],
+        datasets: [{
+          label: 'Heartbeat',
+          data: [75, 80, 70, 90, 100],
+          backgroundColor: 'rgba(224, 144, 255, 0.2)',
+          borderColor: '#d694f4',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: false
+      }
+    });
+
+    const ctx2 = document.getElementById('stepsChart').getContext('2d');
+    const stepsChart = new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        datasets: [{
+          label: 'Steps',
+          data: [5000, 6000, 5500, 6500, 7000],
+          backgroundColor: 'rgba(224, 144, 255, 0.2)',
+          borderColor: '#d694f4',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: false
+      }
+    });
+
+    const ctx3 = document.getElementById('sleepChart').getContext('2d');
+    const sleepChart = new Chart(ctx3, {
+      type: 'pie',
+      data: {
+        labels: ['Deep Sleep', 'Light Sleep'],
+        datasets: [{
+          label: 'Sleep',
+          data: [2, 4],
+          backgroundColor: ['#d08beb', '#ef8be5']
+        }]
+      },
+      options: {
+        responsive: false
+      }
+    });
+  </script>
+</body>
+</html>

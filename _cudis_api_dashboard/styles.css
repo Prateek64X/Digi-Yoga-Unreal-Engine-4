@@ -1,0 +1,125 @@
+/* General styles */
+body {
+  width: 80%;
+  height: 70%;
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Menu styling */
+.menu {
+  background-color: #f9f9f9;
+  padding: 25px;
+  position: fixed;
+  width: 220px;
+  height: 100%;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.menu .nav-link {
+  color: #333;
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.menu .nav-link:hover {
+  color: #d694f4;
+  text-shadow: 0 0 3px #d694f4;
+}
+
+.menu .nav-link.active {
+  color: #d08beb;
+  text-shadow: 0 0 2px #d08beb;
+}
+
+/* Main content */
+.container-fluid {
+  margin-left: 240px;
+  padding: 40px;
+}
+
+h1 {
+  color: #d08beb;
+  font-size: 3.5em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.battery-indicator {
+  font-size: 1.25em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.battery-indicator .fas {
+  color: #d08beb;
+}
+
+/* Data label */
+.data-label {
+  font-size: 1.35em;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.data-label .neon-highlight {
+  font-weight: 700;
+  color: #ef8be5;
+}
+
+/* Graph styling */
+canvas {
+  margin-top: 20px;
+}
+
+.nav-tabs .nav-link {
+  font-size: 1.2em;
+  color: #888;
+}
+
+.nav-tabs .nav-link.active {
+  color: #d08beb;
+  border-bottom: 3px solid #d694f4;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #ef8be5;
+}
+
+/* Goals section styling */
+.goal-btn {
+  background-color: #d08beb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.5em;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 10px;
+  transition: background-color 0.3s ease;
+}
+
+.goal-btn:hover {
+  background-color: #ef8be5;
+  text-shadow: 0 0 8px #ef8be5;
+}
+
+.goal-value {
+  font-size: 2em;
+  color: #ef8be5;
+  font-weight: bold;
+  padding: 0 20px;
+  display: inline-block;
+}
+
+.text-center {
+  margin-top: 50px;
+  font-size: 1.4em;
+}
